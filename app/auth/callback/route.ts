@@ -9,21 +9,6 @@ export async function GET(request: Request) {
     const next = searchParams.get('next') ?? '/guidance'
 
     if (code) {
-        const supabase = createServerClient(
-            process.env.NEXT_PUBLIC_SUPABASE_URL!,
-            process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY!,
-            {
-                cookies: {
-                    getAll() {
-                        return [] // Not needed for exchanging code
-                    },
-                    setAll() {
-                        // Not needed for exchanging code
-                    },
-                },
-            }
-        )
-
         // Create a new response to allow us to set cookies
         const response = NextResponse.redirect(`${origin}${next}`)
 

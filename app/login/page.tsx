@@ -71,8 +71,12 @@ export default function LoginPage() {
         if (error) throw error;
         toast.success("Logged in successfully!");
       }
-    } catch (error: any) {
-      toast.error(error.message || "An error occurred during authentication.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("An error occurred during authentication.");
+      }
     } finally {
       setIsLoading(false);
     }
@@ -97,8 +101,12 @@ export default function LoginPage() {
         },
       });
       if (error) throw error;
-    } catch (error: any) {
-      toast.error(error.message || "Failed to sign in with Google.");
+    } catch (error: unknown) {
+      if (error instanceof Error) {
+        toast.error(error.message);
+      } else {
+        toast.error("Failed to sign in with Google.");
+      }
     }
   };
 
