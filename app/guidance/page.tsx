@@ -90,7 +90,7 @@ function GuidanceContent() {
         const parsed = JSON.parse(quizParam) as QuizData[];
         setQuizData(parsed);
         setShowQuizResults(true);
-        
+
         // Create a summary from quiz answers
         const summary = parsed.map(q => `${q.question}: ${q.answer}`).join('. ');
         setAnswer(summary);
@@ -131,7 +131,7 @@ function GuidanceContent() {
     return () => {
       try {
         recognition.stop();
-      } catch {}
+      } catch { }
       recognitionRef.current = null;
     };
   }, [isSpeechSupported]);
@@ -145,14 +145,14 @@ function GuidanceContent() {
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ answer }),
       });
-      
+
       if (!res.ok) {
         const errorData = await res.json();
         throw new Error(errorData.error || `HTTP error! status: ${res.status}`);
       }
-      
+
       const data = await res.json();
-      
+
       // Validate the response structure and provide fallbacks
       const validatedResult: GuidanceResult = {
         stream: data.stream || "Science",
@@ -163,7 +163,7 @@ function GuidanceContent() {
         next_steps: Array.isArray(data.next_steps) ? data.next_steps : ["Research colleges", "Prepare for entrance exams", "Talk to counselors"],
         language: data.language || "en"
       };
-      
+
       setResult(validatedResult);
     } catch (error) {
       console.error("Error fetching guidance:", error);
@@ -187,12 +187,12 @@ function GuidanceContent() {
     const recognition = recognitionRef.current;
     if (!recognition) return;
     if (isRecording) {
-      try { recognition.stop(); } catch {}
+      try { recognition.stop(); } catch { }
       setIsRecording(false);
     } else {
       setAudioUrl(null);
       setResult(null);
-      try { recognition.start(); setIsRecording(true); } catch {}
+      try { recognition.start(); setIsRecording(true); } catch { }
     }
   }
 
@@ -217,9 +217,9 @@ function GuidanceContent() {
   }
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-background">
       <Header />
-      <div className="mx-auto max-w-2xl px-4 py-8">
+      <div className="mx-auto max-w-2xl px-4 pt-32 pb-12">
         <div className="space-y-6">
           <div>
             <h1 className="text-2xl font-bold text-center mb-2">Career Guidance</h1>
@@ -274,16 +274,16 @@ function GuidanceContent() {
                 )}
               </div>
             </div>
-            
+
             {isRecording && (
               <div className="flex items-center gap-2 text-red-600 text-sm">
                 <div className="w-2 h-2 bg-red-600 rounded-full animate-pulse"></div>
                 Listening... Speak now
               </div>
             )}
-            
-            <Button 
-              onClick={fetchGuidance} 
+
+            <Button
+              onClick={fetchGuidance}
               disabled={loading || !answer.trim()}
               className="w-full"
               size="lg"
@@ -310,7 +310,7 @@ function GuidanceContent() {
                 <div className="bg-green-50 p-4 rounded-lg">
                   <p className="text-sm text-green-800">{result.rationale}</p>
                 </div>
-                
+
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
                   <div className="space-y-2">
                     <h4 className="font-medium text-sm">Recommended Subjects</h4>
@@ -322,7 +322,7 @@ function GuidanceContent() {
                       ))}
                     </div>
                   </div>
-                  
+
                   <div className="space-y-2">
                     <h4 className="font-medium text-sm">Potential Careers</h4>
                     <div className="flex flex-wrap gap-1">
@@ -334,12 +334,12 @@ function GuidanceContent() {
                     </div>
                   </div>
                 </div>
-                
+
                 <div>
                   <h4 className="font-medium text-sm mb-2">Colleges & Advice</h4>
                   <p className="text-sm text-muted-foreground">{result.colleges_advice}</p>
                 </div>
-                
+
                 <div>
                   <h4 className="font-medium text-sm mb-2">Next Steps</h4>
                   <ul className="list-disc pl-5 text-sm text-muted-foreground space-y-1">
@@ -348,11 +348,11 @@ function GuidanceContent() {
                     ))}
                   </ul>
                 </div>
-                
+
                 <div className="flex items-center gap-3 pt-4 border-t">
-                  <Button 
-                    variant="secondary" 
-                    onClick={speakHindi} 
+                  <Button
+                    variant="secondary"
+                    onClick={speakHindi}
                     disabled={isSpeaking}
                     className="flex-1"
                   >
@@ -372,7 +372,7 @@ function GuidanceContent() {
                     <audio controls src={audioUrl} className="flex-1" />
                   )}
                 </div>
-                
+
                 <div className="text-xs text-muted-foreground border-t pt-4 text-center">
                   ⚠️ This is guidance only. Please consult teachers/parents before final decisions.
                 </div>

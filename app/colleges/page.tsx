@@ -97,9 +97,9 @@ const collegesData = [
 
 export default function CollegesPage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-background">
       <Header />
-      <div className="mx-auto max-w-6xl px-4 py-8">
+      <div className="mx-auto max-w-6xl px-4 pt-32 pb-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2">Top Colleges by Stream</h1>
           <p className="text-muted-foreground">
@@ -133,12 +133,12 @@ export default function CollegesPage() {
                     </CardHeader>
                     <CardContent className="space-y-3">
                       <p className="text-sm text-muted-foreground">{college.description}</p>
-                      
+
                       <div className="flex items-center gap-2">
                         <Star className="h-4 w-4 text-yellow-500 fill-current" />
                         <span className="text-sm font-medium">{college.rating}/5</span>
                       </div>
-                      
+
                       <div>
                         <h4 className="text-sm font-medium mb-2">Subjects Offered:</h4>
                         <div className="flex flex-wrap gap-1">

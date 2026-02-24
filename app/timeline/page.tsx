@@ -51,9 +51,9 @@ const timelineData = [
 
 export default function TimelinePage() {
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-background">
       <Header />
-      <div className="mx-auto max-w-4xl px-4 py-8">
+      <div className="mx-auto max-w-4xl px-4 pt-32 pb-8">
         <div className="text-center mb-8">
           <h1 className="text-3xl font-bold mb-2">Academic Timeline</h1>
           <p className="text-muted-foreground">

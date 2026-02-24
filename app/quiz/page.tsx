@@ -110,7 +110,7 @@ export default function QuizPage() {
       const queryParams = new URLSearchParams({
         quizData: JSON.stringify(profile)
       });
-      
+
       router.push(`/guidance?${queryParams.toString()}`);
     } catch (error) {
       console.error("Error submitting quiz:", error);
@@ -122,25 +122,28 @@ export default function QuizPage() {
   const progress = ((currentQuestion + 1) / quizQuestions.length) * 100;
 
   return (
-    <main className="min-h-screen">
+    <main className="min-h-screen bg-background">
       <Header />
-      <div className="mx-auto max-w-2xl px-4 py-8">
-        <Card>
-          <CardHeader>
-            <CardTitle className="text-center">Career Guidance Quiz</CardTitle>
-            <div className="w-full bg-gray-200 rounded-full h-2">
-              <div 
-                className="bg-blue-600 h-2 rounded-full transition-all duration-300" 
+      {/* Added pt-32 to push content below the fixed header */}
+      <div className="mx-auto max-w-2xl px-4 pt-32 pb-12 flex flex-col items-center justify-center min-h-[80vh]">
+        <Card className="w-full glass-panel border-none shadow-xl">
+          <CardHeader className="space-y-4">
+            <CardTitle className="text-center text-3xl font-bold bg-gradient-to-r from-primary to-accent text-transparent bg-clip-text">
+              Career Guidance Quiz
+            </CardTitle>
+            <div className="w-full bg-secondary rounded-full h-3">
+              <div
+                className="bg-primary h-3 rounded-full transition-all duration-500 ease-out"
                 style={{ width: `${progress}%` }}
               />
             </div>
-            <p className="text-sm text-muted-foreground text-center">
+            <p className="text-sm font-medium text-muted-foreground text-center">
               Question {currentQuestion + 1} of {quizQuestions.length}
             </p>
           </CardHeader>
-          <CardContent className="space-y-6">
+          <CardContent className="space-y-8 pt-6">
             <div>
-              <h3 className="text-lg font-medium mb-4">{currentQ.question}</h3>
+              <h3 className="text-xl font-semibold mb-6 leading-relaxed text-foreground">{currentQ.question}</h3>
               <RadioGroup
                 value={answers[currentQ.id] || ""}
                 onValueChange={(value) => handleAnswer(currentQ.id, value)}
@@ -164,16 +167,16 @@ export default function QuizPage() {
               >
                 Previous
               </Button>
-              
+
               {currentQuestion === quizQuestions.length - 1 ? (
-                <Button 
-                  onClick={submitQuiz} 
+                <Button
+                  onClick={submitQuiz}
                   disabled={loading || Object.keys(answers).length < quizQuestions.length}
                 >
                   {loading ? "Submitting..." : "Submit Quiz"}
                 </Button>
               ) : (
-                <Button 
+                <Button
                   onClick={nextQuestion}
                   disabled={!answers[currentQ.id]}
                 >
