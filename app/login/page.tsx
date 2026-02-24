@@ -103,10 +103,10 @@ export default function LoginPage() {
   };
 
   return (
-    <main className="min-h-screen bg-muted/30">
+    <main className="min-h-screen bg-background">
       <Header />
-      <div className="mx-auto flex w-full max-w-sm flex-col justify-center items-center py-16 px-4">
-        <Card className="w-full">
+      <div className="mx-auto flex w-full max-w-sm flex-col justify-center items-center pt-40 pb-16 px-4">
+        <Card className="w-full glass-panel border-none shadow-xl">
           <CardHeader>
             <CardTitle className="text-2xl">{isSignUp ? "Create an account" : "Welcome back"}</CardTitle>
             <CardDescription>

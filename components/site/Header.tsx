@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { useEffect, useState } from "react";
 import { getSupabaseBrowserClient } from "@/lib/supabaseClient";
 import { User } from "@supabase/supabase-js";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export function Header() {
   const pathname = usePathname();
@@ -31,38 +32,47 @@ export function Header() {
   };
 
   return (
-    <header className="w-full border-b bg-background/60 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-      <div className="mx-auto max-w-4xl px-4 py-3 flex items-center justify-between">
-        <Link href="/" className="font-semibold">
-          Student Saarthi
-        </Link>
-        <nav className="flex items-center gap-3">
-          <Link href="/quiz">
-            <Button variant={pathname === "/quiz" ? "default" : "ghost"}>Quiz</Button>
+    <div className="fixed top-0 left-0 right-0 z-50 flex justify-center p-4">
+      <header className="w-full max-w-5xl rounded-full border bg-background/80 backdrop-blur-lg shadow-sm pill-shadow supports-[backdrop-filter]:bg-background/60 transition-all duration-300">
+        <div className="px-6 py-3 flex items-center justify-between">
+          <Link href="/" className="font-bold text-xl tracking-tight flex items-center gap-2">
+            <span className="text-primary text-2xl">✨</span> Student Saarthi
           </Link>
-          <Link href="/guidance">
-            <Button variant={pathname === "/guidance" ? "default" : "ghost"}>Guidance</Button>
-          </Link>
-          <Link href="/timeline">
-            <Button variant={pathname === "/timeline" ? "default" : "ghost"}>Timeline</Button>
-          </Link>
-          <Link href="/colleges">
-            <Button variant={pathname === "/colleges" ? "default" : "ghost"}>Colleges</Button>
-          </Link>
-
-          {user ? (
-            <div className="flex items-center gap-3">
-              <span className="text-sm font-medium">Hello {user.user_metadata?.full_name || 'User'}</span>
-              <Button variant="ghost" size="sm" onClick={handleLogout}>Logout</Button>
-            </div>
-          ) : (
-            <Link href="/login">
-              <Button variant={pathname === "/login" ? "default" : "ghost"}>Login</Button>
+          <nav className="hidden md:flex items-center gap-2">
+            <Link href="/quiz">
+              <Button variant={pathname === "/quiz" ? "secondary" : "ghost"} className="rounded-full">Quiz</Button>
             </Link>
-          )}
-        </nav>
-      </div>
-    </header>
+            <Link href="/guidance">
+              <Button variant={pathname === "/guidance" ? "secondary" : "ghost"} className="rounded-full">Guidance</Button>
+            </Link>
+            <Link href="/timeline">
+              <Button variant={pathname === "/timeline" ? "secondary" : "ghost"} className="rounded-full">Timeline</Button>
+            </Link>
+            <Link href="/colleges">
+              <Button variant={pathname === "/colleges" ? "secondary" : "ghost"} className="rounded-full">Colleges</Button>
+            </Link>
+          </nav>
+
+          <div className="flex items-center gap-2">
+            <ThemeToggle />
+            {user ? (
+              <div className="flex items-center gap-3">
+                <span className="hidden sm:inline-block text-sm font-medium px-3 py-1 bg-secondary rounded-full">
+                  👋 {user.user_metadata?.full_name || 'User'}
+                </span>
+                <Button variant="outline" size="sm" className="rounded-full border-2" onClick={handleLogout}>Logout</Button>
+              </div>
+            ) : (
+              <Link href="/login">
+                <Button variant="default" className="rounded-full font-semibold px-6 shadow-md hover:shadow-lg transition-all duration-300">
+                  Login
+                </Button>
+              </Link>
+            )}
+          </div>
+        </div>
+      </header>
+    </div>
   );
 }
 
