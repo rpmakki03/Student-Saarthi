@@ -33,6 +33,21 @@ create policy "Responses can be inserted by owner" on public.responses for inser
 create policy "Recommendations are viewable by owner" on public.recommendations for select using (auth.uid() = user_id);
 create policy "Recommendations can be inserted by owner" on public.recommendations for insert with check (auth.uid() = user_id);
 
+-- Trigger to automatically create a profile when a new user signs up
+CREATE OR REPLACE FUNCTION public.handle_new_user() 
+RETURNS trigger AS $$
+BEGIN
+  INSERT INTO public.profiles (id, full_name)
+  VALUES (
+    NEW.id,
+    NEW.raw_user_meta_data->>'full_name'
+  );
+  RETURN NEW;
+END;
+$$ LANGUAGE plpgsql SECURITY DEFINER;
 
-
-
+-- Bind the trigger to the auth.users table
+DROP TRIGGER IF EXISTS on_auth_user_created ON auth.users;
+CREATE TRIGGER on_auth_user_created
+  AFTER INSERT ON auth.users
+  FOR EACH ROW EXECUTE PROCEDURE public.handle_new_user();
