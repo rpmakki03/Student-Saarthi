@@ -15,13 +15,14 @@ A Next.js application that provides personalized career guidance for Indian stud
 
 ## Tech Stack
 
-- **Frontend**: Next.js 15 (App Router), TypeScript, Tailwind CSS
+- **Frontend**: Next.js 16 (App Router), TypeScript, Tailwind CSS
 - **UI Components**: shadcn/ui components
 - **AI**: Google Gemini 1.5 Flash model
 - **Text-to-Speech**: Google Cloud Text-to-Speech API
-- **Authentication**: Supabase Auth
+- **Authentication**: Supabase Auth (SSR)
 - **Database**: Supabase (PostgreSQL)
 - **Styling**: Tailwind CSS v4
+- **Theming**: Dark/Light mode toggle (next-themes)
 
 ## Setup Instructions
 
@@ -83,6 +84,8 @@ app/
 components/
 ├── site/            # Site-wide components
 └── ui/              # Reusable UI components
+
+proxy.ts             # Next.js 16 middleware proxy for Supabase Auth
 ```
 
 ## Key Features Implementation
@@ -104,6 +107,7 @@ components/
 
 ### UI/UX
 - Responsive design with Tailwind CSS
+- Dark/Light mode theme toggle
 - Loading states and animations
 - Accessible form controls
 - Modern card-based layout
