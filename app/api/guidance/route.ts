@@ -12,7 +12,7 @@ export async function POST(req: NextRequest) {
     const { answer } = bodySchema.parse(json);
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
 
     const systemPrompt = `You are Student Saarthi, a counselor for Indian students after 10th class.
 You must respond in valid JSON format only with these exact fields:
@@ -34,13 +34,13 @@ Please provide career guidance based on this input.`;
     const result = await model.generateContent([systemPrompt, userPrompt]);
     const response = await result.response;
     const text = response.text();
-    
+
     // Extract JSON from the response
     const jsonMatch = text.match(/\{[\s\S]*\}/);
     if (!jsonMatch) {
       throw new Error("Invalid response format from Gemini");
     }
-    
+
     const raw = jsonMatch[0];
     const parsed = JSON.parse(raw);
 

@@ -13,10 +13,10 @@ export async function POST(req: NextRequest) {
     const { text } = bodySchema.parse(json);
 
     const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY!);
-    
+
     // First, use Gemini to translate/convert the text to Hindi
-    const model = genAI.getGenerativeModel({ model: "gemini-1.5-flash" });
-    
+    const model = genAI.getGenerativeModel({ model: "gemini-2.5-flash" });
+
     const prompt = `Convert this English text to Hindi transliteration (using English letters but Hindi pronunciation):
     
 Text: ${text}
@@ -35,12 +35,12 @@ Respond with only the Hindi transliteration, no explanations.`;
 
     const request = {
       input: { text: hindiText },
-      voice: { 
+      voice: {
         languageCode: 'hi-IN',
         name: 'hi-IN-Standard-A',
         ssmlGender: 'FEMALE' as const
       },
-      audioConfig: { 
+      audioConfig: {
         audioEncoding: 'MP3' as const,
         speakingRate: 0.8,
         pitch: 0

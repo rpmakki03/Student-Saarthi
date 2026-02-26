@@ -36,7 +36,7 @@ export function Header() {
       <header className="w-full max-w-5xl rounded-full border bg-background/80 backdrop-blur-lg shadow-sm pill-shadow supports-[backdrop-filter]:bg-background/60 transition-all duration-300">
         <div className="px-6 py-3 flex items-center justify-between">
           <Link href="/" className="font-bold text-xl tracking-tight flex items-center gap-2">
-            <span className="text-primary text-2xl">✨</span> Student Saarthi
+            <span className="text-primary text-2xl"></span> Student Saarthi
           </Link>
           <nav className="hidden md:flex items-center gap-2">
             <Link href="/quiz">
